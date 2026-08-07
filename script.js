@@ -762,106 +762,63 @@ copyButton.addEventListener(
 // UCAPAN TAMU
 // ==========================================
 
-const wishForm =
-    document.getElementById(
-        "wishForm"
-    );
+const wishForm = document.getElementById("wishForm");
+const wishList = document.getElementById("wishList");
 
-const guestName =
-    document.getElementById(
-        "guestName"
-    );
+let wishes = JSON.parse(localStorage.getItem("weddingWishes")) || [];
 
-const guestMessage =
-    document.getElementById(
-        "guestMessage"
-    );
+renderWish();
 
-const wishList =
-    document.getElementById(
-        "wishList"
-    );
+wishForm.addEventListener("submit", function(e){
 
+    e.preventDefault();
 
-wishForm.addEventListener(
-    "submit",
-    function (event) {
+    const name = document.getElementById("guestName").value.trim();
+    const message = document.getElementById("guestMessage").value.trim();
 
-        event.preventDefault();
+    if(name==="" || message==="") return;
 
+    wishes.unshift({
+        name,
+        message,
+        date:new Date().toLocaleString("id-ID")
+    });
 
-        const name =
-            guestName
-                .value
-                .trim();
+    localStorage.setItem("weddingWishes",JSON.stringify(wishes));
 
+    renderWish();
 
-        const message =
-            guestMessage
-                .value
-                .trim();
+    wishForm.reset();
 
+});
 
-        if (
-            name === ""
-            ||
-            message === ""
-        ) {
+function renderWish(){
 
-            return;
+    wishList.innerHTML="";
 
-        }
+    wishes.forEach(item=>{
 
+        wishList.innerHTML+=`
 
-        const item =
-            document.createElement(
-                "div"
-            );
+        <div class="wish-card">
 
+            <div class="wish-header">
 
-        item.className =
-            "wish-item";
+                <strong>${item.name}</strong>
 
+                <span>${item.date}</span>
 
-        const nameElement =
-            document.createElement(
-                "strong"
-            );
+            </div>
 
+            <p>${item.message}</p>
 
-        nameElement.textContent =
-            name;
+        </div>
 
+        `;
 
-        const messageElement =
-            document.createElement(
-                "p"
-            );
+    });
 
-
-        messageElement.textContent =
-            message;
-
-
-        item.appendChild(
-            nameElement
-        );
-
-
-        item.appendChild(
-            messageElement
-        );
-
-
-        wishList.prepend(
-            item
-        );
-
-
-        wishForm.reset();
-
-    }
-);
+}
 
 // ==========================================
 // WEDDING COUNTDOWN
