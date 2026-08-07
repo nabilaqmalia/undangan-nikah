@@ -757,107 +757,74 @@ copyButton.addEventListener(
     }
 );
 
-
-// =========================
-// GOOGLE APPS SCRIPT URL
-// =========================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBX4aTBrViHSjzu0s33lOzZ9wp0XiDwatdmMELIGlYfLNR0eAr87L-dn9k0I57pLMCTw/exec";
-
 const form = document.getElementById("wishForm");
 const list = document.getElementById("wishList");
 
-// Load saat halaman dibuka
-document.addEventListener("DOMContentLoaded", () => {
-    loadWish();
-});
-
 // Kirim ucapan
 form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const nama = document.getElementById("guestName").value.trim();
     const pesan = document.getElementById("guestMessage").value.trim();
 
-    if (nama === "" || pesan === "") {
+    if (!nama || !pesan) {
         alert("Nama dan ucapan wajib diisi.");
         return;
     }
 
-    const data = new URLSearchParams();
-    data.append("nama", nama);
-    data.append("pesan", pesan);
-
     try {
 
-        const res = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: data
+        await db.collection("ucapan").add({
+            nama: nama,
+            pesan: pesan,
+            waktu: firebase.firestore.FieldValue.serverTimestamp()
         });
-
-        if (!res.ok) throw new Error();
 
         form.reset();
 
-        alert("Ucapan berhasil dikirim ❤️");
-
-        loadWish();
-
     } catch (err) {
 
-        console.log(err);
+        alert("Gagal mengirim ucapan");
 
-        alert("Gagal mengirim ucapan.");
+        console.log(err);
 
     }
 
 });
 
-// Ambil semua ucapan
-async function loadWish() {
+// Tampilkan realtime
+db.collection("ucapan")
+.orderBy("waktu","desc")
+.onSnapshot((snapshot)=>{
 
-    try {
+    list.innerHTML="";
 
-        const response = await fetch(SCRIPT_URL);
+    snapshot.forEach((doc)=>{
 
-        const data = await response.json();
+        const item=doc.data();
 
-        list.innerHTML = "";
+        list.innerHTML+=`
+        <div class="wish-card">
 
-        data.reverse().forEach(item => {
-
-            list.innerHTML += `
-            <div class="wish-card">
-
-                <div class="wish-avatar">
-                    ${item[0].charAt(0).toUpperCase()}
-                </div>
-
-                <div class="wish-content">
-
-                    <h4>${item[0]}</h4>
-
-                    <p>${item[1]}</p>
-
-                    <small>
-                        ${new Date(item[2]).toLocaleString("id-ID")}
-                    </small>
-
-                </div>
-
-            </div>`;
-        });
-
-    } catch (err) {
-
-        console.log(err);
-
-        list.innerHTML = `
-            <div style="text-align:center;padding:20px;">
-                Belum ada ucapan atau gagal memuat data.
+            <div class="wish-avatar">
+                ${item.nama.charAt(0).toUpperCase()}
             </div>
+
+            <div class="wish-content">
+
+                <h4>${item.nama}</h4>
+
+                <p>${item.pesan}</p>
+
+            </div>
+
+        </div>
         `;
-    }
-}
+
+    });
+
+});
 
     
 // ==========================================
