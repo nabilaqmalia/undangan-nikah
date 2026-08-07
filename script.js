@@ -758,17 +758,18 @@ copyButton.addEventListener(
 );
 
 
-// ==========================================
-// UCAPAN TAMU
-// ==========================================
-
+// =========================
+// GOOGLE APPS SCRIPT URL
+// =========================
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBX4aTBrViHSjzu0s33lOzZ9wp0XiDwatdmMELIGlYfLNR0eAr87L-dn9k0I57pLMCTw/exec";
 
 const form = document.getElementById("wishForm");
 const list = document.getElementById("wishList");
 
 // Load saat halaman dibuka
-loadWish();
+document.addEventListener("DOMContentLoaded", () => {
+    loadWish();
+});
 
 // Kirim ucapan
 form.addEventListener("submit", async (e) => {
@@ -777,59 +778,87 @@ form.addEventListener("submit", async (e) => {
     const nama = document.getElementById("guestName").value.trim();
     const pesan = document.getElementById("guestMessage").value.trim();
 
+    if (nama === "" || pesan === "") {
+        alert("Nama dan ucapan wajib diisi.");
+        return;
+    }
+
+    const data = new URLSearchParams();
+    data.append("nama", nama);
+    data.append("pesan", pesan);
+
     try {
-        await fetch(SCRIPT_URL, {
+
+        const res = await fetch(SCRIPT_URL, {
             method: "POST",
-            body: new URLSearchParams({
-                nama: nama,
-                pesan: pesan
-            })
+            body: data
         });
+
+        if (!res.ok) throw new Error();
 
         form.reset();
 
-        // Reload daftar ucapan
+        alert("Ucapan berhasil dikirim ❤️");
+
         loadWish();
 
     } catch (err) {
-        console.error(err);
+
+        console.log(err);
+
         alert("Gagal mengirim ucapan.");
+
     }
+
 });
 
 // Ambil semua ucapan
 async function loadWish() {
+
     try {
+
         const response = await fetch(SCRIPT_URL);
+
         const data = await response.json();
 
         list.innerHTML = "";
 
         data.reverse().forEach(item => {
 
-            const nama = item[0];
-            const pesan = item[1];
-            const waktu = item[2];
-
             list.innerHTML += `
             <div class="wish-card">
+
                 <div class="wish-avatar">
-                    ${nama.charAt(0).toUpperCase()}
+                    ${item[0].charAt(0).toUpperCase()}
                 </div>
 
                 <div class="wish-content">
-                    <h4>${nama}</h4>
-                    <p>${pesan}</p>
-                    <small>${new Date(waktu).toLocaleString("id-ID")}</small>
+
+                    <h4>${item[0]}</h4>
+
+                    <p>${item[1]}</p>
+
+                    <small>
+                        ${new Date(item[2]).toLocaleString("id-ID")}
+                    </small>
+
                 </div>
-            </div>
-            `;
+
+            </div>`;
         });
 
     } catch (err) {
-        console.error(err);
+
+        console.log(err);
+
+        list.innerHTML = `
+            <div style="text-align:center;padding:20px;">
+                Belum ada ucapan atau gagal memuat data.
+            </div>
+        `;
     }
 }
+
     
 // ==========================================
 // WEDDING COUNTDOWN
