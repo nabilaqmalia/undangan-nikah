@@ -2345,47 +2345,51 @@ textarea {
     }
 }
 
-/* ==========================
-   BUNGA 4 SUDUT COVER
-========================== */
+/* ==========================================
+   BUNGA SEMUA SECTION
+========================================== */
 
-#cover {
-    position: relative;
-    overflow: hidden;
+.cover-flower{
+    position:absolute;
+    pointer-events:none;
+    user-select:none;
+    z-index:1;
+    transition:.3s;
 }
 
-.cover-flower {
-    position: absolute;
-    width: 280px;
-    height: auto;
-    object-fit: contain;
-    pointer-events: none;
-    z-index: 1;
+.bunga-atas-kiri{
+    width:280px;
+    top:-60px;
+    left:-70px;
 }
 
-/* KIRI ATAS */
-.bunga-atas-kiri {
-    top: 0;
-    left: 0;
+.bunga-atas-kanan{
+    width:280px;
+    top:-60px;
+    right:-70px;
 }
 
-/* KANAN ATAS */
-.bunga-atas-kanan {
-    top: 0;
-    right: 0;
+.bunga-bawah-kiri{
+    width:260px;
+    bottom:-60px;
+    left:-60px;
 }
 
-/* KIRI BAWAH */
-.bunga-bawah-kiri {
-    bottom: 0;
-    left: 0;
+.bunga-bawah-kanan{
+    width:260px;
+    bottom:-60px;
+    right:-60px;
 }
 
-/* KANAN BAWAH */
-.bunga-bawah-kanan {
-    bottom: 0;
-    right: 0;
+/* semua isi berada di atas bunga */
+
+.section>.container,
+.cover-card{
+    position:relative;
+    z-index:10;
 }
+
+
 /* FIX ICON LOKASI */
 .location-card .logo-lokasi {
     display: block !important;
@@ -2526,4 +2530,45 @@ textarea {
         height:auto;
     }
 
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width:768px){
+
+    .bunga-atas-kiri{
+        width:145px !important;
+        top:-20px !important;
+        left:-40px !important;
+    }
+
+    .bunga-atas-kanan{
+        width:145px !important;
+        top:-20px !important;
+        right:-40px !important;
+    }
+
+    .bunga-bawah-kiri{
+        width:145px !important;
+        bottom:-20px !important;
+        left:-40px !important;
+    }
+
+    .bunga-bawah-kanan{
+        width:145px !important;
+        bottom:-20px !important;
+        right:-40px !important;
+    }
+
+    .cover-card,
+    .container{
+        position:relative;
+        z-index:20;
+    }
+
+    .cover-flower{
+        opacity:.95;
+    }
 }
