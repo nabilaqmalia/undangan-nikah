@@ -2424,3 +2424,47 @@ textarea {
     max-width: none !important;
     max-height: none !important;
 }
+
+/* ==========================================
+   FIX RESPONSIVE BUNGA MOBILE
+========================================== */
+
+@media screen and (max-width:768px){
+
+    .cover-flower{
+        width:120px !important;
+        height:auto !important;
+        opacity:.9;
+        z-index:1;
+    }
+
+    .bunga-atas-kiri{
+        top:-10px !important;
+        left:-35px !important;
+    }
+
+    .bunga-atas-kanan{
+        top:-10px !important;
+        right:-35px !important;
+    }
+
+    .bunga-bawah-kiri{
+        bottom:-10px !important;
+        left:-35px !important;
+    }
+
+    .bunga-bawah-kanan{
+        bottom:-10px !important;
+        right:-35px !important;
+    }
+
+    .container,
+    .cover-card,
+    .section-heading,
+    .countdown,
+    .countdown-date{
+        position:relative;
+        z-index:5;
+    }
+
+}
