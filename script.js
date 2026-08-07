@@ -762,64 +762,75 @@ copyButton.addEventListener(
 // UCAPAN TAMU
 // ==========================================
 
-const wishForm = document.getElementById("wishForm");
-const wishList = document.getElementById("wishList");
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBX4aTBrViHSjzu0s33lOzZ9wp0XiDwatdmMELIGlYfLNR0eAr87L-dn9k0I57pLMCTw/exec";
 
-let wishes = JSON.parse(localStorage.getItem("weddingWishes")) || [];
+const form = document.getElementById("wishForm");
+const list = document.getElementById("wishList");
 
-renderWish();
+// Load saat halaman dibuka
+loadWish();
 
-wishForm.addEventListener("submit", function(e){
-
+// Kirim ucapan
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("guestName").value.trim();
-    const message = document.getElementById("guestMessage").value.trim();
+    const nama = document.getElementById("guestName").value.trim();
+    const pesan = document.getElementById("guestMessage").value.trim();
 
-    if(name==="" || message==="") return;
+    try {
+        await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: new URLSearchParams({
+                nama: nama,
+                pesan: pesan
+            })
+        });
 
-    wishes.unshift({
-        name,
-        message,
-        date:new Date().toLocaleString("id-ID")
-    });
+        form.reset();
 
-    localStorage.setItem("weddingWishes",JSON.stringify(wishes));
+        // Reload daftar ucapan
+        loadWish();
 
-    renderWish();
-
-    wishForm.reset();
-
+    } catch (err) {
+        console.error(err);
+        alert("Gagal mengirim ucapan.");
+    }
 });
 
-function renderWish(){
+// Ambil semua ucapan
+async function loadWish() {
+    try {
+        const response = await fetch(SCRIPT_URL);
+        const data = await response.json();
 
-    wishList.innerHTML="";
+        list.innerHTML = "";
 
-    wishes.forEach(item=>{
+        data.reverse().forEach(item => {
 
-        wishList.innerHTML+=`
+            const nama = item[0];
+            const pesan = item[1];
+            const waktu = item[2];
 
-        <div class="wish-card">
+            list.innerHTML += `
+            <div class="wish-card">
+                <div class="wish-avatar">
+                    ${nama.charAt(0).toUpperCase()}
+                </div>
 
-            <div class="wish-header">
-
-                <strong>${item.name}</strong>
-
-                <span>${item.date}</span>
-
+                <div class="wish-content">
+                    <h4>${nama}</h4>
+                    <p>${pesan}</p>
+                    <small>${new Date(waktu).toLocaleString("id-ID")}</small>
+                </div>
             </div>
+            `;
+        });
 
-            <p>${item.message}</p>
-
-        </div>
-
-        `;
-
-    });
-
+    } catch (err) {
+        console.error(err);
+    }
 }
-
+    
 // ==========================================
 // WEDDING COUNTDOWN
 // ==========================================
