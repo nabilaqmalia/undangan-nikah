@@ -2425,46 +2425,105 @@ textarea {
     max-height: none !important;
 }
 
-/* ==========================================
-   FIX RESPONSIVE BUNGA MOBILE
-========================================== */
+/* =====================================================
+   MOBILE RESPONSIVE FIX
+===================================================== */
 
-@media screen and (max-width:768px){
+@media (max-width:768px){
 
-    .cover-flower{
-        width:120px !important;
-        height:auto !important;
-        opacity:.9;
-        z-index:1;
-    }
-
-    .bunga-atas-kiri{
-        top:-10px !important;
-        left:-35px !important;
-    }
-
-    .bunga-atas-kanan{
-        top:-10px !important;
-        right:-35px !important;
-    }
-
-    .bunga-bawah-kiri{
-        bottom:-10px !important;
-        left:-35px !important;
-    }
-
-    .bunga-bawah-kanan{
-        bottom:-10px !important;
-        right:-35px !important;
+    html,
+    body{
+        overflow-x:hidden;
     }
 
     .container,
-    .cover-card,
-    .section-heading,
+    .hero,
+    section{
+        overflow:hidden;
+    }
+
+    /* ================= FLOWERS ================= */
+
+    .cover-flower{
+        position:absolute;
+        z-index:1;
+        pointer-events:none;
+        opacity:.95;
+        transition:.3s;
+    }
+
+    .flower-top{
+        width:180px !important;
+        left:-80px !important;
+        top:-40px !important;
+        transform:none !important;
+    }
+
+    .flower-bottom{
+        width:180px !important;
+        right:-80px !important;
+        bottom:-40px !important;
+        transform:none !important;
+    }
+
+    /* semua tulisan di atas bunga */
+
+    .hero-content,
+    .cover-content,
+    .countdown-wrapper,
     .countdown,
-    .countdown-date{
+    .couple,
+    .section-title,
+    .section-subtitle,
+    .hero-title,
+    .hero-date{
         position:relative;
-        z-index:5;
+        z-index:20;
+    }
+
+    /* Logo NS */
+
+    .logo-ns{
+        width:170px !important;
+        margin:20px auto;
+        display:block;
+    }
+
+    /* Countdown */
+
+    .countdown{
+        display:flex;
+        justify-content:center;
+        gap:10px;
+        flex-wrap:wrap;
+    }
+
+    .countdown-item{
+        width:68px;
+    }
+
+    .countdown-item strong{
+        font-size:28px;
+    }
+
+    /* Judul */
+
+    h1{
+        font-size:42px;
+    }
+
+    h2{
+        font-size:34px;
+    }
+
+    p{
+        font-size:15px;
+        line-height:1.8;
+    }
+
+    img{
+        max-width:100%;
+        height:auto;
     }
 
 }
