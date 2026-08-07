@@ -2698,3 +2698,182 @@ button:hover{
     color:white;
 
 }
+
+.wish-card{
+
+display:flex;
+
+gap:15px;
+
+align-items:flex-start;
+
+background:#fff;
+
+border-radius:18px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+animation:fadeUp .5s;
+
+}
+
+.avatar{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+background:#52695a;
+
+color:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:22px;
+
+font-weight:bold;
+
+flex-shrink:0;
+
+}
+
+.wish-content{
+
+flex:1;
+
+}
+
+.wish-content h3{
+
+margin-bottom:5px;
+
+color:#52695a;
+
+}
+
+.wish-content p{
+
+margin-bottom:10px;
+
+line-height:1.8;
+
+}
+
+.wish-content small{
+
+color:#999;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ======== UCAPAN ======== */
+
+#wishList{
+    margin-top:25px;
+}
+
+.wish-card{
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.wish-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+.wish-avatar{
+    width:55px;
+    height:55px;
+    min-width:55px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4c6b58,#7ca28a);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.wish-content{
+    flex:1;
+}
+
+.wish-content h4{
+    margin:0;
+    color:#355846;
+    font-size:18px;
+    font-weight:700;
+}
+
+.wish-content p{
+    margin:10px 0;
+    color:#555;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.wish-content small{
+    color:#999;
+    font-size:12px;
+}
+
+@media(max-width:768px){
+
+    .wish-card{
+        padding:15px;
+        gap:12px;
+    }
+
+    .wish-avatar{
+        width:48px;
+        height:48px;
+        min-width:48px;
+        font-size:18px;
+    }
+
+    .wish-content h4{
+        font-size:16px;
+    }
+
+    .wish-content p{
+        font-size:14px;
+    }
+}
