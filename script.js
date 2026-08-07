@@ -860,10 +860,9 @@ const secondsElement2 =
 // TANGGAL PERNIKAHAN
 // ==========================================
 
-const weddingDate =
-    new Date(
-        "2027-06-20T08:00:00+07:00"
-    ).getTime();
+const weddingDate = new Date(2027, 6, 20, 8, 0, 0).getTime();
+// Bulan dimulai dari 0
+// 6 = Juni
 
 
 // ==========================================
@@ -882,20 +881,22 @@ function formatCountdown(number) {
 // UPDATE COUNTDOWN
 // ==========================================
 
-function updateCountdown() {
+function updateCountdown(){
 
-    const now =
-        new Date().getTime();
+    const now = Date.now();
+    const distance = weddingDate - now;
 
+    console.log("Wedding:", weddingDate);
+    console.log("Now:", now);
+    console.log("Distance:", distance);
 
-    const distance =
-        weddingDate - now;
+    if(distance <= 0){
+        console.log("Tanggal sudah lewat atau salah");
+        return;
+    }
 
-
-    /*
-    Kalau tanggal pernikahan
-    sudah lewat.
-    */
+    // lanjutkan kode
+}
 
     if (distance <= 0) {
 
